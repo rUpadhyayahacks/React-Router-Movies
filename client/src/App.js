@@ -23,9 +23,6 @@ const App = () => {
           <MovieList/>
         </Route>
         </Switch>
-      
-      
-      {/* <div>Replace this Div with your Routes</div> */}
     </div>
   );
 };
