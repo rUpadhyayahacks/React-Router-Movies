@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
 const Movie = (props) => {
   const [movie, setMovie] = useState();
+  const {id} = useParams();
+  const [saveButton, setSaveButton] = useState ('save-button')
  
   useEffect(() => {
-    const id = 1;
-    // change ^^^ that line and grab the id from the URL
-    // You will NEED to add a dependency array to this effect hook
 
        axios
         .get(`http://localhost:5000/api/movies/${id}`)
@@ -18,13 +18,13 @@ const Movie = (props) => {
           console.error(error);
         });
 
-  },[]);
+  },[id]);
   
-  // Uncomment this only when you have moved on to the stretch goals
-  // const saveMovie = () => {
-  //   const addToSavedList = props.addToSavedList;
-  //   addToSavedList(movie)
-  // }
+  const saveMovie = () => {
+    const addToSavedList = props.addToSavedList;
+    addToSavedList(movie)
+    setSaveButton('save-button-hide')
+  }
 
   if (!movie) {
     return <div>Loading movie information...</div>;
@@ -48,8 +48,8 @@ const Movie = (props) => {
             {star}
           </div>
         ))}
+         <button onClick={()=> saveMovie()} className={saveButton}>Save</button>
       </div>
-      <div className="save-button">Save</div>
     </div>
   );
 }
